@@ -1,13 +1,13 @@
 {
     "name": "FOTS",
-    "cuda": false,
-    "gpus": [0, 1, 2, 3],
+    "cuda": true,
+    "gpus": [0],
     "data_loader": {
-        "dataset":"icdar2015",
-        "data_dir": "/Users/luning/Dev/data/icdar/icdar2015/4.4/training",
-        "batch_size": 32,
+        "dataset":"dataloader_john",
+        "data_dir": "/home/ubuntu/FOTS/dataSet/set1/",
+        "batch_size": 4,
         "shuffle": true,
-        "workers": 4
+        "workers": 0
     },
     "validation": {
         "validation_split": 0.1,
@@ -26,17 +26,17 @@
         "weight_decay": 1e-5
     },
     "loss": "FOTSLoss",
-    "metrics": ["my_metric", "my_metric2"],
+    "metrics": ["fots_metric"],
     "trainer": {
         "epochs": 100000,
         "save_dir": "saved/",
-        "save_freq": 1,
+        "save_freq": 10,
         "verbosity": 2,
-        "monitor": "val_loss",
-        "monitor_mode": "min"
+        "monitor": "hmean",
+        "monitor_mode": "max"
     },
     "arch": "FOTSModel",
     "model": {
-        "mode": "detection"
+        "mode": "united"
     }
 }
