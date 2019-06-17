@@ -7,6 +7,7 @@ import pathlib
 from FOTS.data_loader import SynthTextDataLoaderFactory
 from FOTS.data_loader import OCRDataLoaderFactory
 from FOTS.data_loader import ICDAR
+from FOTS.data_loader import Custom
 from FOTS.logger import Logger
 from FOTS.model.model import *
 from FOTS.model.loss import *
@@ -29,6 +30,11 @@ def main(config, resume):
         val = data_loader.val()
     elif config['data_loader']['dataset'] == 'synth800k':
         data_loader = SynthTextDataLoaderFactory(config)
+        train = data_loader.train()
+        val = data_loader.val()
+    else:
+        datasets = Custom(config['data_loader']['data_dir'])
+        data_loader = OCRDataLoaderFactory(config, datasets)
         train = data_loader.train()
         val = data_loader.val()
 

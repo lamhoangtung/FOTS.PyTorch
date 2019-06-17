@@ -1,10 +1,10 @@
 {
     "name": "FOTS",
-    "cuda": false,
-    "gpus": [0, 1, 2, 3],
+    "cuda": true,
+    "gpus": [0],
     "data_loader": {
-        "dataset":"synth800k",
-        "data_dir": "/Users/luning/Dev/data/SynthText/SynthText/",
+        "dataset":"dataloader_john",
+        "data_dir": "/home/ubuntu/FOTS/dataSet/set1/",
         "batch_size": 4,
         "shuffle": true,
         "workers": 0
