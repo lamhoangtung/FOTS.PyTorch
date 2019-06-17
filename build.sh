@@ -3,7 +3,7 @@
 CUDA_PATH=/usr/local/cuda
 
 echo "Compiling crop_and_resize kernels by nvcc..."
-cd model/modules/roi_align/src/cuda
+cd ./FOTS/model/modules/roi_align/src/cuda/
 $CUDA_PATH/bin/nvcc -c -o crop_and_resize_kernel.cu.o crop_and_resize_kernel.cu -x cu -Xcompiler -fPIC -arch=sm_60 \
  -gencode=arch=compute_30,code=sm_30 \
  -gencode=arch=compute_50,code=sm_50 \
@@ -13,7 +13,7 @@ $CUDA_PATH/bin/nvcc -c -o crop_and_resize_kernel.cu.o crop_and_resize_kernel.cu 
  -gencode=arch=compute_62,code=sm_62 \
 
 cd ../../../roi_align
-python build.py
+python3 build.py
 
 #cd ..
 #python setup.py install
