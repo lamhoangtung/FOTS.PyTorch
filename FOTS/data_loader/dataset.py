@@ -389,7 +389,7 @@ class Custom(ICDAR):
         '''
 
         imagePath, wordBBoxes, transcripts = gt
-        im = cv2.imread((self.dataRoot / imagePath).as_posix())
+        im = cv2.imread((self.data_root / imagePath).as_posix())
         imagePath = pathlib.Path(imagePath)
         wordBBoxes = np.expand_dims(wordBBoxes, axis=2) if (wordBBoxes.ndim == 2) else wordBBoxes
         _, _, numOfWords = wordBBoxes.shape
