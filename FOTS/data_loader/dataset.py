@@ -329,7 +329,7 @@ class SynthTextDataset(Dataset):
 
 
 class Custom(ICDAR):
-    def __init__(self, data_root):
+    def __init__(self, data_root, type='training'):
         data_root = pathlib.Path(data_root)
         self.structure = {
             'training': {
