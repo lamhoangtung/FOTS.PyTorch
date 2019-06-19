@@ -345,6 +345,7 @@ class Custom(ICDAR):
         self.imagesRoot = data_root / self.structure[type]['images']
         self.gtRoot = data_root / self.structure[type]['gt']
         self.images, self.bboxs, self.transcripts = self.__loadGT()
+        self.data_root = data_root
 
     def __loadGT(self):
         all_bboxs = []
