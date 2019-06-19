@@ -58,7 +58,9 @@ class RecognitionLoss(nn.Module):
 
     def forward(self, *input):
         gt, pred = input[0], input[1]
-        loss = self.ctc_loss(pred[0], gt[0], pred[1], gt[1])
+        gt_0 = gt[0].cuda()
+        gt_1 = gt[1].cuda()
+        loss = self.ctc_loss(pred[0], gt_0, pred[1], gt_1)
         return loss
 
 
