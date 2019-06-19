@@ -389,14 +389,13 @@ class Custom(ICDAR):
         '''
 
         imagePath, wordBBoxes, transcripts = gt
-        im = cv2.imread((self.data_root / imagePath).as_posix())
-        imagePath = pathlib.Path(imagePath)
-        wordBBoxes = np.expand_dims(wordBBoxes, axis=2) if (wordBBoxes.ndim == 2) else wordBBoxes
-        _, _, numOfWords = wordBBoxes.shape
-        text_polys = wordBBoxes.reshape([8, numOfWords], order='F').T  # num_words * 8
-        text_polys = text_polys.reshape(numOfWords, 4, 2)  # num_of_words * 4 * 2
+        im = cv2.imread(imagePath.as_posix())
+        #wordBBoxes = np.expand_dims(wordBBoxes, axis = 2) if (wordBBoxes.ndim == 2) else wordBBoxes
+        #_, _, numOfWords = wordBBoxes.shape
+        numOfWords = len(wordBBoxes)
+        text_polys = wordBBoxes  # num_words * 4 * 2
         transcripts = [word for line in transcripts for word in line.split()]
-        text_tags = np.zeros(numOfWords)  # 1 to ignore, 0 to hold
+        text_tags = [True if(tag == '*' or tag == '###') else False for tag in transcripts]  # ignore '###'
 
         if numOfWords == len(transcripts):
             h, w, _ = im.shape
@@ -415,7 +414,7 @@ class Custom(ICDAR):
                 im, text_polys, text_tags, selected_poly = crop_area(im, text_polys, text_tags, crop_background=True)
                 if text_polys.shape[0] > 0:
                     # cannot find background
-                    raise RuntimeError('Cannot find background.')
+                    raise RuntimeError('cannot find background')
                 # pad and resize image
                 new_h, new_w, _ = im.shape
                 max_h_w_i = np.max([new_h, new_w, input_size])
@@ -430,7 +429,7 @@ class Custom(ICDAR):
             else:
                 im, text_polys, text_tags, selected_poly = crop_area(im, text_polys, text_tags, crop_background=False)
                 if text_polys.shape[0] == 0:
-                    raise RuntimeError('Cannot find background.')
+                    raise RuntimeError('cannot find background')
                 h, w, _ = im.shape
 
                 # pad the image to the training input size or the longer side of image
@@ -458,9 +457,11 @@ class Custom(ICDAR):
             training_masks = training_mask[::4, ::4, np.newaxis].astype(np.float32)
 
             transcripts = [transcripts[i] for i in selected_poly]
-            rectangles = [rectangles[i] for i in selected_poly]
+            mask = [not (word == '*' or word == '###') for word in transcripts]
+            transcripts = list(compress(transcripts, mask))
+            rectangles = list(compress(rectangles, mask))  # [ [pt1, pt2, pt3, pt3],  ]
 
-            assert len(transcripts) == len(rectangles)
+            assert len(transcripts) == len(rectangles)  # make sure length of transcipts equal to length of boxes
             if len(transcripts) == 0:
                 raise RuntimeError('No text found.')
 
