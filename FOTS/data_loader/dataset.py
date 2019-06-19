@@ -350,10 +350,10 @@ class Custom(ICDAR):
         all_bboxs = []
         all_texts = []
         all_images = []
-        for image in self.imagesRoot.glob('*.png'):
-            all_images.append(image)
-            gt = self.gtRoot / image.with_name(image.stem).with_suffix('.icdar').name
-            with gt.open(mode='r') as f:
+        for anno in self.gtRoot.glob('*.icdar'):
+            img = self.imagesRoot / anno.with_name(anno.stem).with_suffix('.png').name
+            all_images.append(img)
+            with anno.open(mode='r') as f:
                 bboxes = []
                 texts = []
                 for line in f:
