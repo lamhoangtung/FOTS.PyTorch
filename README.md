@@ -1,4 +1,4 @@
-## I have finished the detection branch and am still training the model to verify its correctness. All the features will be published to develop branch, and keep master stable. 
+## Japanese FOTS PyTorch 
  - ICDAR Dataset 
  - SynthText 800K Dataset
  - detection branch (verified on the training set, It works!)
