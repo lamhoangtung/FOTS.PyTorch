@@ -1,4 +1,4 @@
-## Japanese FOTS PyTorch 
+# Japanese FOTS PyTorch 
  - ICDAR Dataset 
  - SynthText 800K Dataset
  - detection branch (verified on the training set, It works!)
