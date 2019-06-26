@@ -78,10 +78,10 @@ class FOTSModel:
         }
         return sd
 
-    def load_state_dict(self, sd):
-        self.sharedConv.load_state_dict(sd['0'])
-        self.detector.load_state_dict(sd['1'])
-        self.recognizer.load_state_dict(sd['2'])
+    def load_state_dict(self, sd, strict=True):
+        self.sharedConv.load_state_dict(sd['0'], strict)
+        self.detector.load_state_dict(sd['1'], strict)
+        self.recognizer.load_state_dict(sd['2'], strict)
 
     @property
     def training(self):
