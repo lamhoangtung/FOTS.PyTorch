@@ -155,6 +155,10 @@ class Toolbox:
 
         resize_h = resize_h if resize_h % 32 == 0 else (resize_h // 32 - 1) * 32
         resize_w = resize_w if resize_w % 32 == 0 else (resize_w // 32 - 1) * 32
+
+        # Catch bug when 1 side is smaller than 64 pixels
+        resize_h = 32 if resize_h == 0 else resize_h
+        resize_w = 32 if resize_w == 0 else resize_w
         im = cv2.resize(im, (int(resize_w), int(resize_h)))
 
         ratio_h = resize_h / float(h)
